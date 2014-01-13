@@ -7,19 +7,18 @@ def solveIt(input_data):
     # Modify this code to run your optimization algorithm
 
     # Parse the input
-    number_of_items, capacity, values, weights = parse_input(input_data)
+    capacity, values, weights = parse_input(input_data)
 
     # Call algorithm to solve the problem
     SELECTED_ALGORITHM = algorithms.dynamic_programming
     item_selected = SELECTED_ALGORITHM(capacity=capacity, values=values, weights=weights)
-    total_value = calculate_total_value(values, item_selected)
 
-    # Return solution in specified output format
-    return generate_output(item_selected, total_value, 0)
+    # Return solution as formatted output
+    return generate_custom_output(item_selected=item_selected, capacity=capacity, values=values, weights=weights, is_optimal=0)
 
 
 # UTILITY FUNCTIONS
-def calculate_total_value(values, item_selected):
+def calculate_total_value(item_selected, values):
     """
     Given lists of item values and items selected, returns the achieved objective value.
     """
@@ -29,10 +28,15 @@ def calculate_total_value(values, item_selected):
             total_value += values[i]
     return total_value
 
+def calculate_total_weight(item_selected, weights):
+    """
+    Given lists of item values and items selected, returns the total weight used.
+    """
+    return sum(weights[i] * item_selected[i] for i in xrange(len(weights)))
+
 def parse_input(input_data):
     """
     Given a string of data from an input file, returns:
-        - Number of items
         - Capacity of knapsack
         - List of item values
         - List of item weights
@@ -51,15 +55,26 @@ def parse_input(input_data):
         values.append(int(parts[0]))
         weights.append(int(parts[1]))
 
-    return number_of_items, capacity, values, weights
+    return capacity, values, weights
 
-def generate_output(item_selected, total_value, is_optimal=0):
+def generate_output(item_selected, capacity=0, values=None, weights=None, is_optimal=0):
     """
     Given a solution, returns a string of the solution formatted per problem specification.
     """
-    output_data = str(total_value) + ' ' + str(is_optimal) + '\n'
+    output_data = str(calculate_total_value(item_selected, values)) + ' ' + str(is_optimal) + '\n'
     output_data += ' '.join(map(str, item_selected))
     return output_data
+
+def generate_custom_output(item_selected, capacity, values, weights, is_optimal=0):
+    """
+    Given a solution, returns a string of the solution along with helpful information.
+    Does not conform to the problem specification.
+    """
+    output_data = 'Total value:\t' + str(calculate_total_value(item_selected, values)) + '\n'
+    output_data += 'Total weight:\t' + str(calculate_total_weight(item_selected, weights)) + '\tout of capacity:\t' + str(capacity) + '\n'
+    output_data += 'Items selected:\t' + ' '.join(map(str, item_selected))
+    return output_data
+
 
 
 import sys
