@@ -24,7 +24,7 @@ def fill_in_order(capacity, values, weights):
 def dynamic_programming(capacity, values, weights):
 	"""
 	Simple dynamic programming algorithm.
-	T(n, W) = O(nW), W = knapsack capacity.
+	T(n, W) = O(nW), S(n, W) = O(nW); W = knapsack capacity.
 	"""
 	# Initialization
 	n = len(values)
