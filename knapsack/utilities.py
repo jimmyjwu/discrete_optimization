@@ -1,3 +1,4 @@
+import time
 
 
 def calculate_total_value(item_selected, values):
@@ -37,7 +38,7 @@ def parse_input(input_data):
 
     return capacity, values, weights
 
-def generate_output(item_selected, capacity=0, values=None, weights=None, is_optimal=0):
+def generate_output(start_time, end_time, item_selected, capacity=0, values=None, weights=None, is_optimal=0):
     """
     Given a solution, returns a string of the solution formatted per problem specification.
     """
@@ -45,7 +46,7 @@ def generate_output(item_selected, capacity=0, values=None, weights=None, is_opt
     output_data += ' '.join(map(str, item_selected))
     return output_data
 
-def generate_custom_output(item_selected, capacity, values, weights, is_optimal=0):
+def generate_custom_output(start_time, end_time, item_selected, capacity, values, weights, is_optimal=0):
     """
     Given a solution, returns a string of the solution along with helpful information.
     Does not conform to the problem specification.
@@ -53,9 +54,10 @@ def generate_custom_output(item_selected, capacity, values, weights, is_optimal=
     total_value = calculate_total_value(item_selected, values)
     total_weight = calculate_total_weight(item_selected, weights)
 
-    output_data = 'Total value:\t' + str(total_value) + '\n'
-    output_data += 'Total weight:\t' + str(total_weight) + '\t\tCapacity:\t' + str(capacity) + '\t\t(' + str('%.3f' % (float(total_weight) / float(capacity) * 100)) + '% used)\n'
-    output_data += 'Items selected:\t' + ' '.join(map(str, item_selected))
+    output_data = 'Total value:\t' + str(total_value)
+    output_data += '\nTotal weight:\t' + str(total_weight) + '\t\tCapacity:\t' + str(capacity) + '\t\t(' + str('%.3f' % (float(total_weight) / float(capacity) * 100)) + '% used)'
+    output_data += '\nItems selected:\t' + ' '.join(map(str, item_selected))
+    output_data += '\nRunning time:\t' + str('%.1f' % (end_time - start_time)) + ' seconds'
     return output_data
 
 

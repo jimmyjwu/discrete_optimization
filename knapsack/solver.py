@@ -12,10 +12,12 @@ def solveIt(input_data):
     capacity, values, weights = parse_input(input_data)
 
     # Call algorithm to solve the problem
+    start = time.time()
     item_selected = SELECTED_ALGORITHM(capacity=capacity, values=values, weights=weights)
+    end = time.time()
 
     # Return solution as formatted output
-    return generate_custom_output(item_selected=item_selected, capacity=capacity, values=values, weights=weights, is_optimal=0)
+    return generate_custom_output(start_time=start, end_time=end, item_selected=item_selected, capacity=capacity, values=values, weights=weights, is_optimal=0)
 
 
 
