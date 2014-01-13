@@ -18,7 +18,7 @@ def fill_in_order(capacity, values, weights):
 		else:
 			item_selected.append(0)
 
-	return item_selected
+	return item_selected, 0
 
 
 def dynamic_programming(capacity, values, weights):
@@ -52,7 +52,7 @@ def dynamic_programming(capacity, values, weights):
 			w -= weights[j]
 
 	item_selected = item_selected[1:]	# Remove dummy index-zero element
-	return item_selected
+	return item_selected, 1
 
 
 

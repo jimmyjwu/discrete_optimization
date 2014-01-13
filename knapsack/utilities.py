@@ -54,7 +54,8 @@ def generate_custom_output(start_time, end_time, item_selected, capacity, values
     total_value = calculate_total_value(item_selected, values)
     total_weight = calculate_total_weight(item_selected, weights)
 
-    output_data = 'Total value:\t' + str(total_value)
+    output_data = 'Total value:\t' + str(total_value) + ' '
+    output_data += '(optimal)' if is_optimal == 1 else ' (no optimality proof)'
     output_data += '\nTotal weight:\t' + str(total_weight) + '\t\tCapacity:\t' + str(capacity) + '\t\t(' + str('%.3f' % (float(total_weight) / float(capacity) * 100)) + '% used)'
     output_data += '\nItems selected:\t' + ' '.join(map(str, item_selected))
     output_data += '\nRunning time:\t' + str('%.1f' % (end_time - start_time)) + ' seconds'
