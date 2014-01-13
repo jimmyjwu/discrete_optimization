@@ -50,8 +50,11 @@ def generate_custom_output(item_selected, capacity, values, weights, is_optimal=
     Given a solution, returns a string of the solution along with helpful information.
     Does not conform to the problem specification.
     """
-    output_data = 'Total value:\t' + str(calculate_total_value(item_selected, values)) + '\n'
-    output_data += 'Total weight:\t' + str(calculate_total_weight(item_selected, weights)) + '\tout of capacity:\t' + str(capacity) + '\n'
+    total_value = calculate_total_value(item_selected, values)
+    total_weight = calculate_total_weight(item_selected, weights)
+
+    output_data = 'Total value:\t' + str(total_value) + '\n'
+    output_data += 'Total weight:\t' + str(total_weight) + '\t\tCapacity:\t' + str(capacity) + '\t\t(' + str('%.3f' % (float(total_weight) / float(capacity) * 100)) + '% used)\n'
     output_data += 'Items selected:\t' + ' '.join(map(str, item_selected))
     return output_data
 
