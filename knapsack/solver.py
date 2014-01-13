@@ -10,7 +10,7 @@ def solveIt(input_data):
     number_of_items, capacity, values, weights = parse_input(input_data)
 
     # Call algorithm to solve the problem
-    SELECTED_ALGORITHM = algorithms.fill_in_order
+    SELECTED_ALGORITHM = algorithms.dynamic_programming
     item_selected = SELECTED_ALGORITHM(capacity=capacity, values=values, weights=weights)
     total_value = calculate_total_value(values, item_selected)
 
