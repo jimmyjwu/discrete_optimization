@@ -22,11 +22,7 @@ def calculate_total_value(item_selected, values):
     """
     Given lists of item values and items selected, returns the achieved objective value.
     """
-    total_value = 0
-    for i in xrange(len(item_selected)):
-        if item_selected[i]:
-            total_value += values[i]
-    return total_value
+    return sum(values[i] * item_selected[i] for i in xrange(len(values)))
 
 def calculate_total_weight(item_selected, weights):
     """
