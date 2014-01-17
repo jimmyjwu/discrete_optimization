@@ -87,9 +87,12 @@ def memory_efficient_dynamic_programming(capacity, values, weights):
 					current_k[w] = previous_k[w]
 				else:
 					current_column[w] = previous_column[w - weights[j]] + values[j]
-					current_k = previous_k[w - weights[j]]
+					current_k[w] = previous_k[w - weights[j]]
 
+	print(current_column[W])
+	print(current_k[W])
 
+	return
 
 
 
