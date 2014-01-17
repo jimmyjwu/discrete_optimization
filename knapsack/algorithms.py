@@ -67,17 +67,27 @@ def memory_efficient_dynamic_programming(capacity, values, weights):
 	
 	previous_column = [0 for _ in xrange(0, W + 1)]
 	current_column = [0 for _ in xrange(0, W + 1)]
+	previous_k = [0 for _ in xrange(0, W + 1)]		# k[w] is the row where the optimal path to
+	current_k = [0 for _ in xrange(0, W + 1)]		# column[k] passes through column n/2
 
 	# Find optimal value, column by column.
 	for j in xrange(1, n + 1):
-		# Swap columns to advance current column
+		# Advance current column
 		previous_column, current_column = current_column, previous_column
+		previous_k, current_k = current_k, previous_k
 
 		for w in xrange(1, W + 1):
 			if weights[j] > w:
 				current_column[w] = previous_column[w]
+				current_k[w] = previous_k[w]
 			else:
 				current_column[w] = max(previous_column[w], previous_column[w - weights[j]] + values[j])
+				if previous_column[w] > previous_column[w - weights[j]] + values[j]:
+					current_column[w] = previous_column[w]
+					current_k[w] = previous_k[w]
+				else:
+					current_column[w] = previous_column[w - weights[j]] + values[j]
+					current_k = previous_k[w - weights[j]]
 
 
 
