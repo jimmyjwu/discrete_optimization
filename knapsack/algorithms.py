@@ -24,7 +24,7 @@ def fill_in_order(capacity, values, weights):
 def dynamic_programming(capacity, values, weights):
 	"""
 	Simple dynamic programming algorithm.
-	T(n, W) = O(nW), S(n, W) = O(nW); W = knapsack capacity.
+	T(n, W) = O(nW), S(n, W) = O(nW); n = number of items, W = knapsack capacity.
 	"""
 	# Initialization
 	n = len(values)
@@ -55,6 +55,29 @@ def dynamic_programming(capacity, values, weights):
 	return item_selected, 1
 
 
+def memory_efficient_dynamic_programming(capacity, values, weights):
+	"""
+	A memory-efficient version of the dynamic programming algorithm.
+	T(n, W) = O(nW), S(n, W) = O(W); n = number of items, W = knapsack capacity.
+	"""
+	n = len(values)
+	W = capacity
+	weights = [float('-infinity')] + weights	# Make weights zero-indexed
+	values = [float('-infinity')] + values		# Make values zero-indexed
+	
+	previous_column = [0 for _ in xrange(0, W + 1)]
+	current_column = [0 for _ in xrange(0, W + 1)]
+
+	# Find optimal value, column by column.
+	for j in xrange(1, n + 1):
+		# Swap columns to advance current column
+		previous_column, current_column = current_column, previous_column
+
+		for w in xrange(1, W + 1):
+			if weights[j] > w:
+				current_column[w] = previous_column[w]
+			else:
+				current_column[w] = max(previous_column[w], previous_column[w - weights[j]] + values[j])
 
 
 
