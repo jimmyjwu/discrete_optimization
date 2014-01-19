@@ -3,7 +3,7 @@
 from algorithms import *
 from utilities import *
 
-SELECTED_ALGORITHM = dynamic_programming
+SELECTED_ALGORITHM = memory_efficient_dynamic_programming
 
 def solveIt(input_data):
     # Modify this code to run your optimization algorithm

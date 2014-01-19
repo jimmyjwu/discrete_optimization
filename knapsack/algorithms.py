@@ -55,9 +55,10 @@ def dynamic_programming(capacity, values, weights):
 	return item_selected, 1
 
 
-def memory_efficient_dynamic_programming(capacity, values, weights):
+def calculate_optimal_midpoint(capacity, values, weights):
 	"""
-	A memory-efficient version of the dynamic programming algorithm.
+	A memory-efficient version of the dynamic programming algorithm that returns
+	the value k such that (k, n/2) is in the optimal path through the DP table.
 	T(n, W) = O(nW), S(n, W) = O(W); n = number of items, W = knapsack capacity.
 	"""
 	n = len(values)
@@ -92,8 +93,45 @@ def memory_efficient_dynamic_programming(capacity, values, weights):
 
 	return current_k[W]
 
+def find_optimal_path(capacity, values, weights):
+	n = len(values)
+	W = capacity
+
+	if n == 2:
+		if W - weights[0] > 0:
+			return [W - weights[0], W]
+		else:
+			return [W, W]
+	else:
+		k = calculate_optimal_midpoint(capacity, values, weights)
+
+		left_path = find_optimal_path(k, values[:n/2 + 1], weights[:n/2 + 1])
+		right_path = find_optimal_path(W - k, values[n/2:], weights[n/2:])
+		for i in xrange(len(right_path)):
+			right_path[i] += k
+
+		return left_path + right_path[1:]
 
 
+def evaluate_decision_variables(optimal_weights, capacity, weights):
+	previous_total_weight = optimal_weights[0]
+	for i in xrange(len(optimal_weights)):
+		optimal_weights[i] -= previous_total_weight
+	optimal_weights = optimal_weights[1:] + [capacity if previous_total_weight >= weights[-1] else optimal_weights[-1]]
+	decision_variables = []
 
+	for current_total_weight in optimal_weights:
+		if current_total_weight > previous_total_weight:
+			decision_variables += [1]
+			previous_total_weight = current_total_weight
+		else:
+			decision_variables += [0]
 
+	return decision_variables
+
+def memory_efficient_dynamic_programming(capacity, values, weights):
+	optimal_path = find_optimal_path(capacity, values, weights)
+	print(optimal_path)
+	decision_variables = evaluate_decision_variables(optimal_path, capacity, weights)
+	return decision_variables, 1
 
