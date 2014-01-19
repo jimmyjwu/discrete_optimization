@@ -90,10 +90,7 @@ def memory_efficient_dynamic_programming(capacity, values, weights):
 					if j > n / 2:
 						current_k[w] = previous_k[w - weights[j]]
 
-	print(current_column[W])
-	print(current_k[W])
-
-	return
+	return current_k[W]
 
 
 
